@@ -8,7 +8,15 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepare": "husky install",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --config ./.prettierrc --write --ignore-unknown"
+    ]
   },
   "dependencies": {
     "@next/font": "13.1.6",
@@ -25,6 +33,7 @@
   "devDependencies": {
     "eslint-config-prettier": "^8.6.0",
     "husky": "^8.0.3",
+    "lint-staged": "^13.1.2",
     "prettier": "^2.8.4"
   }
 }
