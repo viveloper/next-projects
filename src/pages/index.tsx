@@ -6,7 +6,11 @@ import Link from 'next/link';
 import { getPokemonList } from '@/api/pokemon';
 
 export default function Home() {
-  const { data: pokemonList } = useQuery({ queryKey: ['pokemon'], queryFn: getPokemonList });
+  const { data: pokemonList } = useQuery({
+    queryKey: ['pokemon'],
+    queryFn: getPokemonList,
+    initialData: [],
+  });
 
   return (
     <div className={styles.container}>
@@ -15,7 +19,7 @@ export default function Home() {
       </Head>
       <h2>Pokemon List</h2>
       <div className={styles.grid}>
-        {pokemonList?.slice(0, 10).map((pokemon) => (
+        {pokemonList.slice(0, 10).map((pokemon) => (
           <div className={styles.card} key={pokemon.id}>
             <Link href={`/pokemon/${pokemon.id}`}>
               <Image
