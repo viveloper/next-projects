@@ -1,25 +1,28 @@
 import { getPokemon } from '@/api/pokemon';
-import { useRouter } from 'next/router';
-import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../../styles/Details.module.css';
+import type { GetServerSideProps } from 'next';
+import type { PokemonDetail } from '../../api/pokemon';
 
-export default function Details() {
-  const {
-    query: { id },
-  } = useRouter();
+interface Props {
+  pokemon: PokemonDetail;
+}
 
-  const { data: pokemon } = useQuery({
-    queryKey: ['pokemon', Number(id)],
-    queryFn: () => getPokemon(Number(id)),
-    enabled: !!id,
-    // refetchOnMount: false,
-  });
+export const getServerSideProps: GetServerSideProps<{ pokemon: PokemonDetail }> = async ({
+  params,
+}) => {
+  const id = isNaN(Number(params?.id)) ? -1 : Number(params?.id);
+  const pokemon = await getPokemon(id);
+  return {
+    props: {
+      pokemon,
+    },
+  };
+};
 
-  if (!pokemon) return;
-
+export default function Details({ pokemon }: Props) {
   return (
     <div>
       <Head>
