@@ -3,39 +3,38 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { getPokemon } from '../api/pokemon/[id]';
 import { Icon } from '@iconify/react';
-import { useQuery } from '@tanstack/react-query';
+import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import type { GetServerSideProps } from 'next';
-import type { PokemonDetail } from '../api/pokemon';
 
-interface Props {
-  data: PokemonDetail;
-}
-
-export const getServerSideProps: GetServerSideProps<{ data: PokemonDetail }> = async ({
+export const getServerSideProps: GetServerSideProps<{ dehydratedState: DehydratedState }> = async ({
   params,
 }) => {
-  const id = isNaN(Number(params?.id)) ? -1 : Number(params?.id);
-  const data = await getPokemon(id);
+  const id = isNaN(Number(params?.id)) ? null : Number(params?.id);
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: ['pokemon', id],
+    queryFn: () => getPokemon(id ?? -1),
+  });
   return {
     props: {
-      data,
+      dehydratedState: dehydrate(queryClient),
     },
   };
 };
 
-export default function Details({ data }: Props) {
+export default function Details() {
   const {
     query: { id },
   } = useRouter();
 
-  const { data: pokemon } = useQuery({
+  const { data: pokemon, isSuccess } = useQuery({
     queryKey: ['pokemon', Number(id)],
     queryFn: () => getPokemon(Number(id)),
-    enabled: !!id,
-    initialData: data,
     refetchOnMount: false,
   });
+
+  if (!isSuccess) return;
 
   return (
     <>
