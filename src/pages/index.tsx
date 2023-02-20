@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getPokemonList } from './api/pokemon-list';
+import ProjectCard from '@/components/ProjectCard';
 
 export default function Home() {
   const { data: pokemonList } = useQuery({
@@ -13,25 +14,12 @@ export default function Home() {
   });
 
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
-        <title>Pokemon List</title>
+        <title>Side Projects</title>
       </Head>
-      <h2>Pokemon List</h2>
-      <div className={styles.grid}>
-        {pokemonList.slice(0, 10).map((pokemon) => (
-          <div className={styles.card} key={pokemon.id}>
-            <Link href={`/pokemon/${pokemon.id}`}>
-              <Image
-                width={200}
-                height={200}
-                alt={pokemon.name}
-                src={`https://jherr-pokemon.s3.us-west-1.amazonaws.com/${pokemon.image}`}
-              />
-              <h3>{pokemon.name}</h3>
-            </Link>
-          </div>
-        ))}
+      <div className="p-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <ProjectCard />
       </div>
     </div>
   );

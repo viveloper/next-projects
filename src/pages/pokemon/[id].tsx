@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
 import { getPokemon } from '../api/pokemon/[id]';
-import styles from '../../styles/Details.module.css';
+import styles from './Details.module.css';
 
 export default function Details() {
   const {
@@ -26,7 +26,7 @@ export default function Details() {
         <title>{pokemon.name}</title>
       </Head>
       <div>
-        <Link href="/">Back to Home</Link>
+        <Link href="/pokemon">Back to Home</Link>
       </div>
       <div className={styles.layout}>
         <div>
