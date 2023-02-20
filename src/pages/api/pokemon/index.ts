@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 }
 
 export const getPokemonList = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pokemon-list`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pokemon`);
   const data: Pokemon[] = await res.json();
   return data;
 };
