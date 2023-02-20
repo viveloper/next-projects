@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 }
 
 export const getPokemon = async (id: number) => {
-  const res = await fetch(`/api/pokemon/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pokemon/${id}`);
   const data: PokemonDetail = await res.json();
   return data;
 };
