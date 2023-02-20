@@ -3,26 +3,40 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { getPokemon } from '../api/pokemon/[id]';
 import { Icon } from '@iconify/react';
+import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 import type { GetServerSideProps } from 'next';
 import type { PokemonDetail } from '../api/pokemon';
 
 interface Props {
-  pokemon: PokemonDetail;
+  data: PokemonDetail;
 }
 
-export const getServerSideProps: GetServerSideProps<{ pokemon: PokemonDetail }> = async ({
+export const getServerSideProps: GetServerSideProps<{ data: PokemonDetail }> = async ({
   params,
 }) => {
   const id = isNaN(Number(params?.id)) ? -1 : Number(params?.id);
-  const pokemon = await getPokemon(id);
+  const data = await getPokemon(id);
   return {
     props: {
-      pokemon,
+      data,
     },
   };
 };
 
-export default function Details({ pokemon }: Props) {
+export default function Details({ data }: Props) {
+  const {
+    query: { id },
+  } = useRouter();
+
+  const { data: pokemon } = useQuery({
+    queryKey: ['pokemon', Number(id)],
+    queryFn: () => getPokemon(Number(id)),
+    enabled: !!id,
+    initialData: data,
+    refetchOnMount: false,
+  });
+
   return (
     <>
       <Head>
