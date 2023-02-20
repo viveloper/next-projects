@@ -1,9 +1,9 @@
-import { getPokemon } from '@/api/pokemon';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
+import { getPokemon } from '../api/pokemon/[id]';
 import styles from '../../styles/Details.module.css';
 
 export default function Details() {

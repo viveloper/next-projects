@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getPokemonList } from '@/api/pokemon';
+import { getPokemonList } from './api/pokemon-list';
 
 export default function Home() {
   const { data: pokemonList } = useQuery({
