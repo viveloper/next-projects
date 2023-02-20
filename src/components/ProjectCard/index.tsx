@@ -5,27 +5,31 @@ export interface Props {
   id: number;
   image?: string;
   title: string;
+  path: string;
   description?: string;
   tags?: string[];
 }
 
 const ProjectCard = ({
-  image = '/empty-project.png',
+  image = '/project-thumbnails/empty-project.png',
   title,
+  path,
   description = '',
   tags = [],
 }: Props) => {
   return (
-    <div className="rounded overflow-hidden shadow-lg">
-      <Link href={`/pokemon`}>
-        <Image className="w-full px-6 py-4" width={400} height={400} alt={'image'} src={image} />
-        <div className="px-6 py-4">
+    <div className="rounded overflow-hidden shadow-lg px-6 py-4">
+      <Link href={path}>
+        <div className="relative w-full h-56">
+          <Image className="object-contain" fill sizes="192px" priority alt={'image'} src={image} />
+        </div>
+        <div className="mt-4">
           <div className="font-bold text-xl mb-2">{title}</div>
           <p className="text-gray-700 text-base">{description}</p>
         </div>
       </Link>
 
-      <div className="px-6 pt-4 pb-2">
+      <div className="mt-4">
         {tags.map((tag) => (
           <span
             key={tag}
