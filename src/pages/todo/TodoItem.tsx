@@ -8,7 +8,7 @@ interface Props {
 }
 
 const TodoItem = ({ todo }: Props) => {
-  const [todoList, setTodoList] = useRecoilState(todoListState);
+  const setTodoList = useSetRecoilState(todoListState);
   const [editableItemId, setEditableItemId] = useRecoilState(editableItemIdState);
   const setInputValueState = useSetRecoilState(inputValueState);
 

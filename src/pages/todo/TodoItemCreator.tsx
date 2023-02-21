@@ -1,5 +1,5 @@
-import { ChangeEvent, useState, KeyboardEventHandler, useRef, useEffect } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { ChangeEvent, KeyboardEventHandler, useRef, useEffect } from 'react';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 import { inputValueState, editableItemIdState, todoListState } from './state';
 import type { Todo } from '../api/todo';
