@@ -1,4 +1,4 @@
-import LoadingScreen from '@/components/LoadingScreen';
+import LoadingScreen from '@/components/common/LoadingScreen';
 import { useQuery } from '@tanstack/react-query';
 import Head from 'next/head';
 import Image from 'next/image';

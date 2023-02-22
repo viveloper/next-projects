@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { RecoilRoot } from 'recoil';
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import Navbar from '@/components/Navbar';
+import Navbar from '@/components/common/Navbar';
 import '@/styles/globals.scss';
 import type { AppProps } from 'next/app';
 

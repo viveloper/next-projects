@@ -1,5 +1,5 @@
 import { atom, atomFamily, selector } from 'recoil';
-import type { Todo } from '../api/todo';
+import type { Todo } from '@/pages/api/todo';
 
 export const todoAtomFamilyState = atomFamily<Todo, Todo['id']>({
   key: 'todoAtomFamilyState',

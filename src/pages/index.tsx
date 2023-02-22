@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import ProjectCard from '@/components/ProjectCard';
+import ProjectCard from '@/components/common/ProjectCard';
 import { PROJECTS } from '@/static/app';
 
 export default function Home() {

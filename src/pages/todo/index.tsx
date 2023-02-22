@@ -1,8 +1,8 @@
+import Filter from '@/components/todo/Filter';
+import { filteredTodoIdsState } from '@/components/todo/state';
+import TodoItem from '@/components/todo/TodoItem';
+import TodoItemCreator from '@/components/todo/TodoItemCreator';
 import { useRecoilValue } from 'recoil';
-import Filter from './Filter';
-import { filteredTodoIdsState } from './state';
-import TodoItem from './TodoItem';
-import TodoItemCreator from './TodoItemCreator';
 
 export default function Home() {
   const filteredTodoIds = useRecoilValue(filteredTodoIdsState);

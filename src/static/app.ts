@@ -1,4 +1,4 @@
-import { Props as ProjectCardProps } from '@/components/ProjectCard';
+import { Props as ProjectCardProps } from '@/components/common/ProjectCard';
 
 export const PROJECTS: ProjectCardProps[] = [
   {

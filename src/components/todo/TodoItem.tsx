@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import type { Todo } from '../api/todo';
 import { editableItemIdState, inputValueState, todoAtomFamilyState } from './state';
+import type { Todo } from '@/pages/api/todo';
 
 interface Props {
   id: Todo['id'];
