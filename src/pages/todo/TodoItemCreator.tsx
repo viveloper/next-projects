@@ -1,18 +1,20 @@
 import { ChangeEvent, KeyboardEventHandler, useRef, useEffect } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { v4 as uuidv4 } from 'uuid';
-import { inputValueState, editableItemIdState, todoListState } from './state';
-import type { Todo } from '../api/todo';
+import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
+import { v4 as uuid } from 'uuid';
 import clsx from 'clsx';
+import {
+  inputValueState,
+  editableItemIdState,
+  todoAtomFamilyState,
+  todoIdsState,
+  isAddModeState,
+} from './state';
 
 const TodoItemCreator = () => {
   const [inputValue, setInputValue] = useRecoilState(inputValueState);
-  const setTodoList = useSetRecoilState(todoListState);
-  const [editableItemId, setEditableItemId] = useRecoilState(editableItemIdState);
+  const isAddMode = useRecoilValue(isAddModeState);
 
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const isAddMode = !editableItemId;
 
   useEffect(() => {
     if (!isAddMode && inputRef.current) {
@@ -29,25 +31,33 @@ const TodoItemCreator = () => {
     isAddMode ? addItem() : editItem();
   };
 
-  const addItem = () => {
-    if (!inputValue.trim()) return;
-    const newTodoItem: Todo = {
-      id: uuidv4(),
-      text: inputValue,
-      done: false,
-    };
-    setTodoList((prev) => [...prev, newTodoItem]);
-    setInputValue('');
-  };
+  const addItem = useRecoilCallback(
+    ({ snapshot, set }) =>
+      () => {
+        if (!inputValue.trim()) return;
+        const ids = snapshot.getLoadable(todoIdsState).getValue();
+        const newId = uuid();
+        set(todoIdsState, [...ids, newId]);
+        set(todoAtomFamilyState(newId), { id: newId, text: inputValue, done: false });
 
-  const editItem = () => {
-    if (!inputValue.trim()) return;
-    setTodoList((prev) =>
-      prev.map((item) => (item.id === editableItemId ? { ...item, text: inputValue } : item)),
-    );
-    setInputValue('');
-    setEditableItemId('');
-  };
+        setInputValue('');
+      },
+    [inputValue],
+  );
+
+  const editItem = useRecoilCallback(
+    ({ snapshot, set, reset }) =>
+      () => {
+        if (!inputValue.trim()) return;
+        const editableItemId = snapshot.getLoadable(editableItemIdState).getValue();
+        const targetTodoItem = snapshot.getLoadable(todoAtomFamilyState(editableItemId)).getValue();
+        set(todoAtomFamilyState(editableItemId), { ...targetTodoItem, text: inputValue });
+
+        reset(isAddModeState);
+        setInputValue('');
+      },
+    [inputValue],
+  );
 
   return (
     <div className="flex items-center justify-between relative">

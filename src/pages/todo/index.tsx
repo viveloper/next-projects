@@ -1,11 +1,11 @@
 import { useRecoilValue } from 'recoil';
 import Filter from './Filter';
-import { filteredTodoListState, filterState, todoListState } from './state';
+import { filteredTodoIdsState } from './state';
 import TodoItem from './TodoItem';
 import TodoItemCreator from './TodoItemCreator';
 
 export default function Home() {
-  const filteredTodoList = useRecoilValue(filteredTodoListState);
+  const filteredTodoIds = useRecoilValue(filteredTodoIdsState);
 
   return (
     <main className="p-10 bg-gray-800 text-white min-h-[calc(100vh-80px)]">
@@ -15,10 +15,10 @@ export default function Home() {
         </h1>
         <TodoItemCreator />
         <ul className="m-0 my-4 p-0 list-none w-full">
-          {filteredTodoList.map((todo) => (
-            <TodoItem key={todo.id} todo={todo} />
+          {filteredTodoIds.map((id) => (
+            <TodoItem key={id} id={id} />
           ))}
-          {!filteredTodoList.length && (
+          {!filteredTodoIds.length && (
             <span className="text-center inline-block w-full p-4 text-gray-600 text-xs">
               Add a new item to get started!
             </span>

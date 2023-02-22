@@ -1,21 +1,22 @@
 import clsx from 'clsx';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import type { Todo } from '../api/todo';
-import { editableItemIdState, inputValueState, todoListState } from './state';
+import { editableItemIdState, inputValueState, todoAtomFamilyState } from './state';
 
 interface Props {
-  todo: Todo;
+  id: Todo['id'];
 }
 
-const TodoItem = ({ todo }: Props) => {
-  const setTodoList = useSetRecoilState(todoListState);
+const TodoItem = ({ id }: Props) => {
+  const [todo, setTodo] = useRecoilState(todoAtomFamilyState(id));
   const [editableItemId, setEditableItemId] = useRecoilState(editableItemIdState);
   const setInputValueState = useSetRecoilState(inputValueState);
 
   const toggleDone = () => {
-    setTodoList((prev) =>
-      prev.map((item) => (item.id === todo.id ? { ...item, done: !item.done } : item)),
-    );
+    setTodo((current) => ({
+      ...current,
+      done: !current.done,
+    }));
   };
 
   const editItem = () => {

@@ -1,12 +1,12 @@
 import clsx from 'clsx';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { filterState, todoListState } from './state';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { filterState, todoIdsState } from './state';
 
 const Filter = () => {
   const [filter, setFilter] = useRecoilState(filterState);
-  const setTodoList = useSetRecoilState(todoListState);
+  const resetTodoIds = useResetRecoilState(todoIdsState);
   const clearTodoList = () => {
-    setTodoList([]);
+    resetTodoIds();
   };
   return (
     <div className="flex py-4 border-t border-gray-900 justify-between">

@@ -5,7 +5,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 export type Todo = {
   id: string;
   text: string;
-  done?: boolean;
+  done: boolean;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Todo[]>) {
